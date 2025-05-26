@@ -8,7 +8,7 @@ function App() {
 
   return (
   //  <OtpInput/>
-    <ProgressBar/>
+    <ProgressBar progress={34} />
   )
 }
 

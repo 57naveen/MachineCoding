@@ -1,42 +1,87 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import json from "../../data.json";
 
 
 //Render List of objects
-const List = ({ list }) => {
+const List = ({ list,addNodeToList  }) => {
+  const [isExpand, setIsExpand] = useState({});
 
- 
+  const handleClick = (name) => {
+    setIsExpand((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
 
-  const [isExpand, setIsExpand] = useState({})
-
-   const handleClick = () =>{
-
-    setIsExpand((prev)=>(
-      {
-        ...prev,[node.name] : !prev[node.name],
-      }
-    ))
-  }
   return (
     <div className="Explorer_container">
       {list.map((node) => (
         <div key={node.id}>
-          <span>{node.name}</span>
-          {node.isfolder && <span onClick={handleClick}  style={{cursor:"pointer"}}> {isExpand?.[node.name] ? "➖":"🔻"}  </span>}
-          {isExpand?.[node.name] && node?.Children && <List list={node.Children} />} 
+         
+          {node.isfolder && (
+            <span
+              onClick={() => handleClick(node.name)}
+              style={{ cursor: "pointer" }}
+            >
+              {isExpand?.[node.name] ? "➖" : "🔻"}
+            </span>
+          )}
+           <span>{node.name}</span>
+
+{ node?.isfolder &&  <span onClick={() => addNodeToList(node.id)} className="icon-folder" ><img className="icon"  alt="folder-icon" src="/images/add-folder.png"/></span>}
+
+         {isExpand?.[node.name] && node?.children && (
+  <List list={node.children} addNodeToList={addNodeToList} />
+)}
         </div>
       ))}
     </div>
   );
 };
 
+
 const FileExplorer = () => {
   const [data, setData] = useState(json);
+
+  const addNodeToList = (parentId) =>{
+
+    const name = prompt("Enter name");
+
+    const updateTree = (list) =>{
+
+      return list.map((node)=>{
+        if(node.id === parentId){
+          return {
+            ...node,
+            children:[
+
+              ...node?.children,
+              {id:"123",name:name,isfolder:true,children:[]}
+            ],
+
+            
+          }
+        }
+
+        if(node.children){
+          return {...node,children:updateTree(node.children)};
+        }
+        return node;
+
+      })
+
+    }
+
+
+    setData((prev)=>updateTree(prev))
+
+  }
+
 
   return (
     <div>
       <h1>File/Folder Explorer</h1>
-      <List list={data} />
+      <List list={data} addNodeToList={addNodeToList} />
     </div>
   );
 };

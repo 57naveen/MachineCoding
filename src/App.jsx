@@ -3,16 +3,18 @@ import './App.css'
 import SearchBar from './Components/Auto Complete Search bar/SearchBar'
 import FileExplorer from './Components/File Explorer/FileExplorer'
 import OtpInput from './Components/OTP Input/OtpInput'
+import Pagination from './Components/Pagination/Pagination'
 import ProgressBar from './Components/ProgressBar/ProgressBar'
 
 function App() {
 
 
   return (
-  //  <OtpInput/>
+     //  <OtpInput/>
     // <ProgressBar progress={34} />
     // <FileExplorer/>
-    <SearchBar/>
+    // <SearchBar/>
+    <Pagination/>
   )
 }
 

@@ -144,3 +144,23 @@ body {
 .active-button{
   background-color: aqua;
 }
+
+.tab-container{
+  display: flex;
+}
+
+.tab-name{
+  padding: 10px;
+  border: 1px solid black;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.tab-body{
+  display: flex;
+  border: 1px solid black;
+  width: 900px;
+  height: 200px;
+  padding: 10px;
+}
+
